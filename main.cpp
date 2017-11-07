@@ -1,13 +1,16 @@
-#include <iostream>
-#include <string.h>
 #include <stdlib.h>
+#include <iostream>
 #include <ncurses.h>
+#include <unistd.h>
+#include <limits.h>
+#include <string.h>
 #include "Dungeon.h"
 
 #define DELAY 30000
 #define EVENT_CONSTANT 1000
 #define END_X 81
 #define END_Y 23
+
 
 Dungeon main_dungeon;
 
@@ -31,10 +34,11 @@ void print_dungeon(WINDOW *win, int fog)
    wrefresh(win);
 }
 
-int main(int argc, char* argvp[])
+int main(int argc, char* argv[])
 {
     /**
-     * Initiate the windows to display the dungeon
+     * TODO read from file 
+     * and parse the monsters
      */
 
     WINDOW *dungeon_win;
@@ -47,7 +51,9 @@ int main(int argc, char* argvp[])
     message_win = newwin(1, END_X, 0, 0);
 
     while(1)
-    {  
+    {
+ 
+       
        wclear(dungeon_win);
        print_dungeon(dungeon_win, main_dungeon.fog_state);
        wrefresh(dungeon_win);
@@ -103,9 +109,9 @@ int main(int argc, char* argvp[])
        {
           //Don't move the character but move the monsters
        }
-       else if(ch == 'm')
+      /* else if(ch == 'm')
        {
-          /* main_dungeon.list_monster_state = 1;
+           main_dungeon.list_monster_state = 1;
            monster_index = 0;
            wclear(message_win);
            int monsterx_pos = monster_arr[monster_index].x_position;
@@ -130,15 +136,16 @@ int main(int argc, char* argvp[])
            else if (difference_in_x < 0 && difference_in_y < 0)
            {
              wprintw(message_win, "monster %c, is %d north and %d left", main_dungeon.dungeon[monsterx_pos][monstery_pos], abs(difference_in_x), abs(difference_in_y));  
-           }*/
+           }
            
            wrefresh(message_win);
-       }
+       }*/
        else if(ch == 27)
        {
            main_dungeon.list_monster_state = 0;
            wclear(message_win);
            wrefresh(message_win);
+ 
        }
        else if(ch == '<' && !main_dungeon.list_monster_state)
        {
@@ -148,7 +155,7 @@ int main(int argc, char* argvp[])
              //wclear(message_win);
              main_dungeon.remake_dungeon();
              //init_monsters(monster_arr, num_monsters);
-            // place_monsters(monster_arr, num_monsters);
+             //place_monsters(monster_arr, num_monsters);
            }
        }
        else if (ch == '>' && !main_dungeon.list_monster_state)
@@ -207,6 +214,6 @@ int main(int argc, char* argvp[])
 
     main_dungeon.print_game_status();
     endwin();
-
     return 0;
+   
 }
