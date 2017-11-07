@@ -51,9 +51,7 @@ int main(int argc, char* argv[])
     message_win = newwin(1, END_X, 0, 0);
 
     while(1)
-    {
- 
-       
+    {      
        wclear(dungeon_win);
        print_dungeon(dungeon_win, main_dungeon.fog_state);
        wrefresh(dungeon_win);
